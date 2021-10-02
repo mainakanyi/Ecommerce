@@ -6,7 +6,14 @@ import CartScreen from './Screens/CartScreen';
 import SigninScreen from './Screens/SigninScreen';
 import { useDispatch, useSelector } from 'react-redux';
 import { signout } from './actions/userActions';
-import RegisterScreen from './screens/RegisterScreen';
+import RegisterScreen from './Screens/RegisterScreen';
+import ShippingAddressScreen from './Screens/ShippingAdressScreen';
+import PaymentMethodScreen from './Screens/PaymentMethodScreeen';
+import PlaceOrderScreen from './Screens/PlaceOrderScreen';
+import OrderScreen from './Screens/OrderScreen';
+import OrderHistoryScreen from './Screens/OrderHistoryScreen';
+import ProfileScreen from './Screens/ProfileScreen';
+import PrivateRoute from './components/PrivateRoute';
 //import { useSelector } from 'react-redux';
 
 function App() {
@@ -18,7 +25,7 @@ function App() {
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
-//console.log("user "+JSON.stringify(userInfo));
+  //console.log("user "+JSON.stringify(userInfo));
   const dispatch = useDispatch();
   const signoutHandler = () => {
     dispatch(signout());
@@ -43,6 +50,12 @@ function App() {
                 </Link>
                 <ul className="dropdown-content">
                   <li>
+                    <Link to="/profile">User Profile</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderhistory">Order History</Link>
+                  </li>
+                  <li>
                     <Link to="#signout" onClick={signoutHandler}>
                       Sign Out
                     </Link>
@@ -51,6 +64,27 @@ function App() {
               </div>
             ) : (
               <Link to="/signin">Sign In</Link>
+            )}
+            {userInfo && userInfo.isAdmin && (
+              <div className="dropdown">
+                <Link to="#admin">
+                  Admin <i className="fa fa-caret-down"></i>
+                </Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </li>
+                  <li>
+                    <Link to="/productlist">Products</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderlist">Orders</Link>
+                  </li>
+                  <li>
+                    <Link to="/userlist">Users</Link>
+                  </li>
+                </ul>
+              </div>
             )}
           </div>
         </header>
@@ -61,6 +95,12 @@ function App() {
           <Route path="/cart/:id?" component={CartScreen}></Route>
           <Route path="/register" component={RegisterScreen}></Route>
           <Route path="/signin" component={SigninScreen}></Route>
+          <Route path="/shipping" component={ShippingAddressScreen}></Route>
+          <Route path="/payment" component={PaymentMethodScreen}></Route>
+          <Route path="/placeorder" component={PlaceOrderScreen}></Route>
+          <Route path="/order/:id" component={OrderScreen}></Route>
+          <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
+          <PrivateRoute path="/profile" component={ProfileScreen}></PrivateRoute>
           <Route path="/" component={HomeScreen} exact></Route>
         </main>
         <footer className="row center">All right reserved</footer>
