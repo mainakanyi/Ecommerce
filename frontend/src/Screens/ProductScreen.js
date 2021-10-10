@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { detailsProducts } from '../actions/productActions';
+import Fade from "react-reveal/Fade";
 
 export default function ProductScreen(props) {
   // const product = data.products.find(x => x._id === props.match.params.id);
@@ -30,6 +31,7 @@ export default function ProductScreen(props) {
         :
         error ? <MessageBox variant="danger">{error}</MessageBox>
           :
+          <Fade bottom cascade>
           <div>
             <Link to="/">Back to result</Link>
             <div className="row top">
@@ -90,6 +92,7 @@ export default function ProductScreen(props) {
               </div>
             </div>
           </div>
+          </Fade>
       }
 
     </div>

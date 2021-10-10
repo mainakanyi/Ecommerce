@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { base64encode } from 'nodejs-base64';
 
 export const generateToken = (user) => {
     return jwt.sign(
@@ -26,8 +27,9 @@ export const isAuth = (req, res, next) => {
                 if (err) {
                     res.status(401).send({ message: 'Invalid Token' });
                 } else {
-                    req.user = decode;
-                    next();
+                    //Decode container information about user in the token
+                    req.user = decode; //we assign user as a property of the request
+                    next(); //we pass user as a property of request to the next middleware
                 }
             }
         );
@@ -44,3 +46,8 @@ export const isAdmin = (req, res, next) => {
         res.status(401).send({ message: 'Invalid Admin Token' });
     }
 };
+
+export const Base64EncodeMethod = (consumer_key, consumer_secret) => {
+    let encoded = base64encode(`${consumer_key}:${consumer_secret}`);
+    return encoded;
+}

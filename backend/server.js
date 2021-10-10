@@ -4,6 +4,7 @@ import userRouter from './routers/userRouter.js';
 import productRouter from './routers/productRouter.js';
 import dotenv from 'dotenv';
 import orderRouter from './routers/orderRouter.js';
+import mpesaRouter from './routers/mpesa.js';
 
 //Allow to use .env file
 dotenv.config();
@@ -21,6 +22,7 @@ mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost:27017/rmkecomme
 
 app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
+app.use('/api/mp', mpesaRouter);
 app.use('/api/orders', orderRouter);
 app.get('/api/config/paypal', (req, res) => {
     res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
@@ -31,7 +33,7 @@ app.get('/', (req, res) => {
 });
 
 //this will capture all the errors
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
     res.status(500).send({ message: err.message });
 });
 

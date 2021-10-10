@@ -18,7 +18,7 @@ export default function SigninScreen(props) {
     const dispatch = useDispatch();
     const [password, setPassword] = useState('');
     const submitHandler = (e) => {
-        e.preventDefault();//Prevent form from refreshing when you click sign in button
+        e.preventDefault();//Prevent form from refreshing the page when you click sign in button
         // TODO: sign in action
         dispatch(signin(email, password));
     };
